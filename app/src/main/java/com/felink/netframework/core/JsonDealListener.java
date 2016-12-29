@@ -1,6 +1,7 @@
 package com.felink.netframework.core;
 
 import android.os.Handler;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -27,12 +28,19 @@ public class JsonDealListener<M> implements IHttpListener {
     public void onSuccess(InputStream inputStream) {
         String content = getContent(inputStream);
         Gson gson = new Gson();
-        final M response = gson.fromJson(content,responseClass);
+         M response = null;
+        try {
+            response = gson.fromJson(content,responseClass);
+        }catch (Exception e){
+            Log.e("linbin",e.toString());
+        }
+
+        final M finalResponse = response;
         handler.post(new Runnable() {
             @Override
             public void run() {
                 if (jsonListener != null){
-                    jsonListener.onSuccess(response);
+                    jsonListener.onSuccess(finalResponse);
                 }
             }
         });

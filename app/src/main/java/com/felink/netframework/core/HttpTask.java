@@ -9,11 +9,11 @@ import java.io.UnsupportedEncodingException;
  * Created by Administrator on 2016/12/28.
  */
 
-public class HttpTask implements Runnable {
+public class HttpTask<T> implements Runnable {
 
     private IHttpService httpService;
 
-    private <T extends Serializable> HttpTask(T requestInfo, String url, IHttpListener iHttpListener){
+    public  <T extends Serializable> HttpTask(T requestInfo, String url, IHttpListener iHttpListener){
         httpService = new JSONHttpService();
         httpService.setUrl(url);
         httpService.setHttpCallBack(iHttpListener);
